@@ -1,0 +1,9 @@
+﻿using Application.DTOs;
+using Application.Features.Commands;
+
+namespace Application.Interfaces;
+
+public interface IListingService
+{
+    Task<Guid> CreateListing(CreateListingRequest req, CancellationToken ct = default);
+}

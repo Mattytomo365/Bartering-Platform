@@ -1,0 +1,61 @@
+<mat-card class="search-card">
+  <div class="search-form" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="q" placeholder="What are you looking for?" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let c of categories" [value]="c">{{ c }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="radius-slider-field">
+      <label for="radiusKm">Radius: {{ form.value.radiusKm }} km</label>
+      <mat-slider
+        id="radiusKm"
+        min="1"
+        max="500"
+        step="1"
+        tickInterval="10"
+        color="primary"
+      >
+        <input matSliderThumb formControlName="radiusKm" thumbLabel="true" />
+      </mat-slider>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sort by</mat-label>
+      <mat-select formControlName="sort">
+        <mat-option *ngFor="let s of sortOptions" [value]="s.value">{{ s.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="search()" [disabled]="loading">
+      Search
+    </button>
+  </div>
+</mat-card>
+
+<mat-list *ngIf="results.length; else noResults" class="results-list">
+  <mat-list-item *ngFor="let item of results">
+    <h3 matLine>{{ item.title }}</h3>
+    <p matLine>{{ item.snippet }}</p>
+    <p matLine class="meta">
+      <span>{{ item.category }}</span>
+      <span *ngIf="item.distanceKm">· {{ item.distanceKm | number:'1.1-1' }} km away</span>
+    </p>
+  </mat-list-item>
+</mat-list>
+
+<ng-template #noResults>
+  <p class="no-results">No results found.</p>
+</ng-template>
+
+<div class="pagination" *ngIf="total > pageSize">
+  <button mat-button (click)="prevPage()" [disabled]="page === 1">Previous</button>
+  <span>Page {{ page }} of {{ totalPages }}</span>
+  <button mat-button (click)="nextPage()" [disabled]="page * pageSize >= total">Next</button>
+</div>

@@ -1,0 +1,70 @@
+<mat-card class="form-card">
+  <mat-card-content>
+    <form [formGroup]="form" class="form-grid">
+      <!-- Title (full width) -->
+      <mat-form-field appearance="outline" class="span2">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <!-- Description (full width) -->
+      <mat-form-field appearance="outline" class="span2">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+
+      <!-- The rest sit two-per-row -->
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input matInput formControlName="category" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Condition</mat-label>
+        <input matInput formControlName="condition" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" formControlName="priceAmount" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Currency</mat-label>
+        <input matInput formControlName="priceCurrency" />
+      </mat-form-field>
+
+      <!-- Location display and override -->
+      <div class="span2" style="margin-bottom: 12px; color: #666; font-size: 0.95em; padding: 8px 0 8px 0;">
+        <mat-icon style="vertical-align: middle;">place</mat-icon>
+        <span *ngIf="listingLocation as loc">Current location: <b>{{ loc.displayName }}</b></span>
+        <span *ngIf="!listingLocation">No location set</span>
+      </div>
+      <mat-form-field appearance="outline" class="span2" style="margin-bottom: 12px;">
+        <mat-label>Town or Postcode</mat-label>
+        <input
+          matInput
+          formControlName="locationDisplay"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayFn.bind(this)"
+          (optionSelected)="optionSelected($event)"
+        >
+          <mat-option *ngFor="let s of suggestions" [value]="s">
+            {{ s.displayName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="span2" style="margin-bottom: 18px; color: #666; font-size: 0.95em; padding-bottom: 8px;">
+        <span>To override your profile location for this listing, use the autocomplete above to search for a different town or postcode.</span>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions align="end" class="actions">
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="save()">
+      Save
+    </button>
+  </mat-card-actions>
+</mat-card>

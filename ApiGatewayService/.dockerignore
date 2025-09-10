@@ -1,0 +1,35 @@
+# Build outputs
+bin/
+obj/
+publish/
+TestResults/
+
+# Logs
+Logs/
+*.log
+
+# Dev config & secrets (don’t bake into image)
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.pem
+*.key
+ocelot.development.json
+ocelot.*.local.json
+
+
+# VCS/IDE clutter
+.git/
+.gitignore
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+
+# Env files
+.env
+.env.local
+
+

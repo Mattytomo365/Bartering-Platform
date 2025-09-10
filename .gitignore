@@ -1,0 +1,42 @@
+# --- .NET build & publish output
+**/bin/
+**/obj/
+**/publish/
+
+# Only ignore binaries inside build/publish output (keeps you safe if you ever vendor a .dll intentionally)
+**/bin/**/*.dll
+**/obj/**/*.dll
+**/publish/**/*.dll
+**/bin/**/*.exe
+**/obj/**/*.exe
+**/publish/**/*.exe
+**/*.pdb
+**/*.deps.json
+
+# Logs
+**/Logs/
+*.log
+
+# IDE
+.vs/
+*.user
+*.suo
+.idea/
+.vscode/
+
+# Secrets / certs
+**/appsettings.*.local.json
+**/.usersecrets/
+**/*.pfx
+**/*.pem
+**/*.key
+
+# Docker / env
+**/.env
+**/.env.local
+docker-data/
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/

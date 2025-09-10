@@ -1,0 +1,11 @@
+@Web_HostAddress = http://localhost:5114
+@Web_HTTPS_HostAddress = https://localhost:7199
+
+### HTTPS
+POST {{Web_HTTPS_HostAddress}}/api/profile/location
+Content-Type: application/json
+{
+  "displayName":"Clitheroe",
+  "latitude":     51.5074,
+  "longitude":    -0.1278
+}

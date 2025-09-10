@@ -1,0 +1,61 @@
+<mat-card class="profile-card">
+  <mat-card-title>Profile Location</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="locationForm" autocomplete="off">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Town or Postcode</mat-label>
+        <input
+          matInput
+          formControlName="displayName"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayFn.bind(this)"
+          (optionSelected)="optionSelected($event)"
+        >
+          <mat-option *ngFor="let s of suggestions" [value]="s">
+            {{ s.displayName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="coords-row">
+        <mat-form-field appearance="outline" class="half">
+          <mat-label>Latitude</mat-label>
+          <input matInput formControlName="latitude" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half">
+          <mat-label>Longitude</mat-label>
+          <input matInput formControlName="longitude" />
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        <!-- <button mat-button type="button" (click)="useMyLocation()">
+          Use My Location
+        </button> -->
+        <button
+          mat-button
+          type="button"
+          (click)="useMyLocation()"
+          [disabled]="loading"
+        >
+          <mat-icon *ngIf="!loading">my_location</mat-icon>
+          <mat-progress-spinner
+            *ngIf="loading"
+            diameter="20"
+            mode="indeterminate">
+          </mat-progress-spinner>
+          Use My Location
+        </button>        
+        <button mat-raised-button color="primary" (click)="save()">
+          Save
+        </button>
+      </div>
+
+      <div *ngIf="error" class="error">{{ error }}</div>
+    </form>
+  </mat-card-content>
+</mat-card>

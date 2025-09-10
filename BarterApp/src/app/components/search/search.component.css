@@ -1,0 +1,135 @@
+.search-card {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 16px;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.search-form button {
+  grid-column: 1 / -1; /* span full width under other fields */
+  margin-top: -6px;
+}
+
+.radius-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: rgba(0,0,0,0.6);
+  margin-top: 2px;
+  display: flex;
+  gap: 8px;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.results-list {
+  max-width: 1100px;
+  min-height: 400px;
+  margin: 32px auto 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 0;
+  overflow-y: auto;
+}
+
+/* Override Angular Material list item height and layout */
+.results-list mat-list-item .mat-mdc-list-item,
+.results-list mat-list-item .mat-list-item {
+  height: auto !important;
+  min-height: auto !important;
+  padding: 16px 24px !important;
+  align-items: flex-start !important;
+}
+
+.results-list .mat-mdc-list-item-unscoped-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.results-list .mat-list-item {
+  min-height: 110px;
+  align-items: flex-start;
+  padding: 28px 32px 20px 32px;
+  box-sizing: border-box;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  background: #fff;
+}
+
+.results-list .mat-list-text {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.results-list h3[matLine] {
+  margin: 0 0 10px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a237e;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.3;
+  display: block;
+  margin-top: 8px !important;
+}
+
+.results-list p[matLine] {
+  margin: 0 0 6px 0;
+  width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  font-size: 1.08rem;
+  display: block;
+}
+
+.results-list .meta {
+  font-size: 1.05rem;
+  color: #37474f;
+  margin-top: 10px;
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  flex-wrap: wrap;
+  line-height: 1.4;
+  margin-top: 8px !important;
+}
+
+/* Ensure primary and secondary text spans show full content */
+.results-list .mat-mdc-list-item__primary-text,
+.results-list .mat-mdc-list-item__secondary-text,
+.results-list .mat-list-item-content {
+  overflow: visible !important;
+  height: auto !important;
+  white-space: normal !important;
+}
+
+/* Allow list items to expand */
+.results-list .mat-mdc-list-item {
+  overflow: visible !important;
+  height: auto !important;
+}

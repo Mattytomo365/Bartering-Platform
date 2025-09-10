@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Styles for the listing form dialog */
+.listing-form-dialog-container .mat-dialog-container {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listing-form-dialog-container .form-card {
+  width: 100%;
+  max-width: 600px;
+}
+
+.listing-form-dialog-container .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.listing-form-dialog-container .span2 {
+  grid-column: span 2;
+}
+
+.listing-form-dialog-container mat-form-field {
+  width: 100%;
+}
+
+.listing-form-dialog-container textarea {
+  min-height: 80px;
+}
+
+.listing-form-dialog-container .actions {
+  padding: 0 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

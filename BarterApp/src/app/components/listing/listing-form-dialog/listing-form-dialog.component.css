@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 24px; /* space around the card */
+}
+  
+  /* Give mat-card-content padding if needed */
+mat-card-content {
+  padding: 24px;
+}
+  
