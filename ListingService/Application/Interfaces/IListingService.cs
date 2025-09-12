@@ -6,4 +6,5 @@ namespace Application.Interfaces;
 public interface IListingService
 {
     Task<Guid> CreateListing(CreateListingRequest req, CancellationToken ct = default);
+    Task<Guid> UpdateListing(UpdateListingRequest req, CancellationToken ct = default);
 }

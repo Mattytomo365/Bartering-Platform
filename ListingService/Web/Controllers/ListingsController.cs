@@ -35,11 +35,19 @@ namespace Web.Controllers
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Update(Guid id, UpdateListingCommand cmd)
+        //{
+        //    if (id != cmd.Id) return BadRequest();
+        //    await _mediator.Send(cmd);
+        //    return NoContent();
+        //}
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UpdateListingCommand cmd)
+        public async Task<IActionResult> Update(Guid id, UpdateListingRequest req)
         {
-            if (id != cmd.Id) return BadRequest();
-            await _mediator.Send(cmd);
+            if (id != req.Id) return BadRequest();
+            await _listingService.UpdateListing(req);
             return NoContent();
         }
 
