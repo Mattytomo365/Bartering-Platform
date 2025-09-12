@@ -1,0 +1,21 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "<Server=localhost,1433;Database=Listings;User Id=sa;Password=***;TrustServerCertificate=True;>"
+  },
+  "ApiKey": "<set via local dev file or env>",
+  "RabbitMQ": {
+    "ConnectionString": "<amqp://appuser:***@localhost:5672/my_vhost>",
+    "Exchange": "listing.events"
+
+    /* Optional discrete form if your code expects it:
+    "HostName": "localhost",
+    "Port": 5672,
+    "UserName": "appuser",
+    "Password": "***",
+    "VirtualHost": "my_vhost"
+    */
+  },
+  "Logging": {
+    "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" }
+  }
+}

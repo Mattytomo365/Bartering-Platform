@@ -1,0 +1,9 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "<Server=localhost,1433;Database=Profile;User Id=sa;Password=***;TrustServerCertificate=True;>"
+  },
+  "ApiKey": "<set via local dev file or env>",
+  "Logging": {
+    "LogLevel": { "Default": "Information", "Microsoft.AspNetCore": "Warning" }
+  }
+}

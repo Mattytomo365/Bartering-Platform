@@ -30,6 +30,9 @@
 **/*.pfx
 **/*.pem
 **/*.key
+**/appsettings.Development.json
+**/appsettings.*.local.json
+BarterApp/src/firebase-config.ts
 
 # Docker / env
 **/.env
