@@ -1,0 +1,61 @@
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SQL_SA_PASSWORD}
+      MSSQL_PID: Developer
+    ports: ["1433:1433"]
+    volumes: [ "mssql_data:/var/opt/mssql" ]
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${RABBIT_VHOST}
+    ports: ["5672:5672", "15672:15672"]
+    volumes: [ "rabbitmq_data:/var/lib/rabbitmq" ]
+
+  listing:
+    build: { context: ../ListingService, dockerfile: Dockerfile }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Sql: ${SQL_CONN_LISTINGS}
+      RabbitMQ__ConnectionString: ${RABBIT_CONN}
+      Jwt__SigningKey: ${JWT_SIGNING_KEY}
+    depends_on: [ sql, rabbitmq ]
+    ports: ["5101:8080"]
+
+  discovery:
+    build: { context: ../DiscoveryService, dockerfile: Dockerfile }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Sql: ${SQL_CONN_DISCOVERY}
+      RabbitMQ__ConnectionString: ${RABBIT_CONN}
+    depends_on: [ sql, rabbitmq ]
+    ports: ["5102:8080"]
+
+  profile:
+    build: { context: ../ProfileService, dockerfile: Dockerfile }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__Sql: ${SQL_CONN_PROFILES}
+      Jwt__SigningKey: ${JWT_SIGNING_KEY}
+    depends_on: [ sql ]
+    ports: ["5103:8080"]
+
+  apigateway:
+    build: { context: ../ApiGatewayService, dockerfile: Dockerfile }
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Docker
+      DownstreamServices__Listing: http://listing:8080
+      DownstreamServices__Discovery: http://discovery:8080
+      DownstreamServices__Profile: http://profile:8080
+    depends_on: [ listing, discovery, profile ]
+    ports: ["8080:8080"]
+
+volumes:
+  mssql_data:
+  rabbitmq_data:
