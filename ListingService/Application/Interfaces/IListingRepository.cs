@@ -9,4 +9,5 @@ public interface IListingRepository
     Task<IEnumerable<Listing>> GetByOwnerAsync(string ownerId);
     Task UpdateAsync(Listing listing);
     Task SaveChangesAsync();
+    Task DeleteAsync(Listing listing);
 }

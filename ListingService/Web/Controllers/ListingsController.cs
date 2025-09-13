@@ -51,10 +51,17 @@ namespace Web.Controllers
             return NoContent();
         }
 
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    await _mediator.Send(new DeleteListingCommand { Id = id });
+        //    return NoContent();
+        //}
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
-            await _mediator.Send(new DeleteListingCommand { Id = id });
+            await _listingService.DeleteListing(id, ct);
             return NoContent();
         }
 

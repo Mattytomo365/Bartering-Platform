@@ -72,8 +72,6 @@ public class Listing
         //));
     }
 
-
-
     public void Update(string title, string description, Money price, List<string> wants,
         string category, string condition, double? latitude, double? longitude)
     {
@@ -90,13 +88,6 @@ public class Listing
             Id, Title, Description, Category, Condition, 
             Latitude ?? 0, Longitude ?? 0, CreatedAt
         ));
-    }
-
-    public void Delete()
-    {
-        IsActive = false;
-
-        AddEvent(new ListingDeletedEvent(Id));
     }
 
     public void AddEvent(object @event) => _events.Add(@event);

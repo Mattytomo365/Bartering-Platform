@@ -84,4 +84,21 @@ public class ListingService : IListingService
 
         return listing.Id;
     }
+
+    public async Task<Guid> DeleteListing(Guid id, CancellationToken ct = default)
+    {
+        var listing = await _repo.GetByIdAsync(id);
+        if (listing == null)
+            throw new Exception($"Listing with ID {id} not found.");
+
+        await _repo.DeleteAsync(listing);
+        await _repo.SaveChangesAsync();
+
+        listing.AddEvent(new ListingDeletedEvent(listing.Id));
+
+        foreach (var @evt in listing.Events)
+            await _publisher.PublishAsync(@evt);
+
+        return listing.Id;
+    }
 }

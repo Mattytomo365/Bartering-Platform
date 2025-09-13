@@ -21,4 +21,11 @@ public class ListingRepository : IListingRepository
         return Task.CompletedTask;
     }
     public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
+
+    public Task DeleteAsync(Listing listing)
+    {
+        _db.Listings.Remove(listing);
+        return Task.CompletedTask;
+    }
+    
 }
