@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.Features.Commands;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Events;
 using Domain.ValueObjects;
@@ -13,11 +14,13 @@ public class ListingService : IListingService
 {
     private readonly IListingRepository _repo;
     private readonly IRabbitMqPublisher _publisher;
+    private readonly IMapper _mapper;
 
-    public ListingService(IListingRepository repo, IRabbitMqPublisher publisher)
+    public ListingService(IListingRepository repo, IRabbitMqPublisher publisher, IMapper mapper)
     {
         _repo = repo;
         _publisher = publisher;
+        _mapper = mapper;
     }
 
     public async Task<Guid> CreateListing(CreateListingRequest req, CancellationToken ct = default)
@@ -100,5 +103,17 @@ public class ListingService : IListingService
             await _publisher.PublishAsync(@evt);
 
         return listing.Id;
+    }
+
+    public async Task<ListingDetailDto> GetListingById(GetListingByIdRequest req, CancellationToken ct = default)
+    {
+        var listing = await _repo.GetByIdAsync(req.Id);
+        return _mapper.Map<ListingDetailDto>(listing);
+    }
+
+    public async Task<IEnumerable<ListingDto>> GetUserListings(GetUserListingsRequest req, CancellationToken ct = default)
+    {
+        var listings = await _repo.GetByOwnerAsync(req.OwnerId);
+        return _mapper.Map<IEnumerable<ListingDto>>(listings);
     }
 }

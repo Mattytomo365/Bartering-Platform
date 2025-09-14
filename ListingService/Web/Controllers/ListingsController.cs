@@ -65,17 +65,31 @@ namespace Web.Controllers
             return NoContent();
         }
 
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetById(Guid id)
+        //{
+        //    var dto = await _mediator.Send(new GetListingByIdQuery { Id = id });
+        //    return Ok(dto);
+        //}
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
         {
-            var dto = await _mediator.Send(new GetListingByIdQuery { Id = id });
+            var dto = await _listingService.GetListingById(new GetListingByIdRequest { Id = id }, ct);
             return Ok(dto);
         }
 
+        //[HttpGet("user/{ownerId}")]
+        //public async Task<IActionResult> GetUserListings(string ownerId)
+        //{
+        //    var dtos = await _mediator.Send(new GetUserListingsQuery { OwnerId = ownerId });
+        //    return Ok(dtos);
+        //}
+
         [HttpGet("user/{ownerId}")]
-        public async Task<IActionResult> GetUserListings(string ownerId)
+        public async Task<IActionResult> GetUserListings(string ownerId, CancellationToken ct)
         {
-            var dtos = await _mediator.Send(new GetUserListingsQuery { OwnerId = ownerId });
+            var dtos = await _listingService.GetUserListings(new GetUserListingsRequest { OwnerId = ownerId }, ct);
             return Ok(dtos);
         }
     }
