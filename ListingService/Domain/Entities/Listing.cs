@@ -4,6 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Domain.Entities;
 
+/// <summary>
+/// Domain entity / aggregate root for marketplace listings
+/// Encapsulates state + behavior and enforces invariants (valid title, non-negative price, etc)
+/// This is the source of truth used by application services; API DTOs map to/from this type
+/// </summary>
 public class Listing
 {
     public Guid Id { get; set; }
@@ -41,7 +46,9 @@ public class Listing
         Condition = default!;
     }
 
-    // Your domain constructor
+    /// <summary>
+    /// Constructor used to create a valid listing and enforce invariants
+    /// </summary>
     [SetsRequiredMembers] // Tells the compiler that this constructor sets required members
     public Listing(
         string ownerId,
@@ -72,6 +79,9 @@ public class Listing
         //));
     }
 
+    /// <summary>
+    /// Update mutable fields while preserving invariants
+    /// </summary>
     public void Update(string title, string description, Money price, List<string> wants,
         string category, string condition, double? latitude, double? longitude)
     {

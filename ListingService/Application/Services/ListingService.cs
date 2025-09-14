@@ -23,6 +23,10 @@ public class ListingService : IListingService
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Create a new listing from the request. Persists it and emits a ListingCreated event
+    /// Returns the new listing id
+    /// </summary>
     public async Task<Guid> CreateListing(CreateListingRequest req, CancellationToken ct = default)
     {
         // 1) Use the constructor that enforces invariants
@@ -58,6 +62,10 @@ public class ListingService : IListingService
         return listing.Id;
     }
 
+    /// <summary>
+    /// Update an existing listing. Persists changes and publishes resulting events
+    /// Returns the id updated
+    /// </summary>
     public async Task<Guid> UpdateListing(UpdateListingRequest req, CancellationToken ct = default)
     {
         var listing = await _repo.GetByIdAsync(req.Id);
@@ -88,6 +96,10 @@ public class ListingService : IListingService
         return listing.Id;
     }
 
+    /// <summary>
+    /// Delete a listing by id. Publishes ListingDeleted
+    /// Returns the id deleted
+    /// </summary>
     public async Task<Guid> DeleteListing(Guid id, CancellationToken ct = default)
     {
         var listing = await _repo.GetByIdAsync(id);
@@ -105,12 +117,18 @@ public class ListingService : IListingService
         return listing.Id;
     }
 
+    /// <summary>
+    /// Query returning a detailed DTO for a single listing page
+    /// </summary>
     public async Task<ListingDetailDto> GetListingById(GetListingByIdRequest req, CancellationToken ct = default)
     {
         var listing = await _repo.GetByIdAsync(req.Id);
         return _mapper.Map<ListingDetailDto>(listing);
     }
 
+    /// <summary>
+    /// Query returning a collection of lightweight listing DTOs for a user's listings view.
+    /// </summary>
     public async Task<IEnumerable<ListingDto>> GetUserListings(GetUserListingsRequest req, CancellationToken ct = default)
     {
         var listings = await _repo.GetByOwnerAsync(req.OwnerId);

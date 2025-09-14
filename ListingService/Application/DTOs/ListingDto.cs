@@ -1,5 +1,6 @@
 ﻿namespace Application.DTOs;
 
+// Response DTO - output models shaping what is returned
 public class ListingDto
 {
     public Guid Id { get; set; }

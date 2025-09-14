@@ -28,6 +28,10 @@ namespace Web.Controllers
         //    return CreatedAtAction(nameof(GetById), new { id }, null);
         //}
 
+        /// <summary>
+        /// Creates a new listing
+        /// Returns 201 Created with a Location header pointing to GET /api/listings/{id}
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create(CreateListingRequest req)
         {
@@ -43,10 +47,14 @@ namespace Web.Controllers
         //    return NoContent();
         //}
 
+        /// <summary>
+        /// Fully updates an existing listing (id from route, fields from body)
+        /// Returns 204 No Content on success
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, UpdateListingRequest req)
         {
-            if (id != req.Id) return BadRequest();
+            if (id != req.Id) return BadRequest(); // guard against mismatched ids
             await _listingService.UpdateListing(req);
             return NoContent();
         }
@@ -58,6 +66,10 @@ namespace Web.Controllers
         //    return NoContent();
         //}
 
+        /// <summary>
+        /// Hard deletes a listing by id
+        /// Returns 204 No Content
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
@@ -72,6 +84,10 @@ namespace Web.Controllers
         //    return Ok(dto);
         //}
 
+        /// <summary>
+        /// Gets a single listing with detail fields suitable for a detail page
+        /// Returns 200 OK with ListingDetailDto
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
         {
@@ -86,6 +102,10 @@ namespace Web.Controllers
         //    return Ok(dtos);
         //}
 
+        /// <summary>
+        /// Gets all active listings for an owner (lightweight cards/table)
+        /// Returns 200 OK with a collection of ListingDto
+        /// </summary
         [HttpGet("user/{ownerId}")]
         public async Task<IActionResult> GetUserListings(string ownerId, CancellationToken ct)
         {
