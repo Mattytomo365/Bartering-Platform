@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs;
+﻿namespace Application.DTOs.Responses;
 
-// Response DTO - output models shaping what is returned
+// Response/output DTO - read model returned to client
 public class ListingDto
 {
     public Guid Id { get; set; }

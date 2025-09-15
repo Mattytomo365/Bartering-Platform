@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Requests;
 using Application.Features.Commands;
 using Application.Features.Queries;
 using Application.Interfaces;

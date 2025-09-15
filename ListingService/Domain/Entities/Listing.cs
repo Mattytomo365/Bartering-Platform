@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Domain.Entities;
 
 /// <summary>
-/// Domain entity / aggregate root for marketplace listings
+/// Domain entity / write model / aggregate root for marketplace listings
 /// Encapsulates state + behavior and enforces invariants (valid title, non-negative price, etc)
 /// This is the source of truth used by application services; API DTOs map to/from this type
 /// </summary>

@@ -1,9 +1,9 @@
-﻿namespace Application.DTOs;
+﻿namespace Application.DTOs.Requests;
 
-// Request DTO - input models shaping what clients send
-public class CreateListingRequest
+// Request/input DTO - the shape of what the client sends
+public class UpdateListingRequest
 {
-    public required string OwnerId { get; init; }
+    public Guid Id { get; init; }
     public required string Title { get; init; }
     public required string Description { get; init; }
     public decimal PriceAmount { get; init; }
@@ -15,3 +15,4 @@ public class CreateListingRequest
     public double Latitude { get; init; }
     public double Longitude { get; init; }
 }
+
