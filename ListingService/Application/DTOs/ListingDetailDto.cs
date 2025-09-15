@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Responses;
+﻿namespace Application.DTOs;
 
 // Response/output DTO - read model returned to client
 public class ListingDetailDto

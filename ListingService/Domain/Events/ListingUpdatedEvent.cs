@@ -1,7 +1,7 @@
 ﻿namespace Domain.Events;
 
 /// <summary>
-/// Carries the full payload needed downstream.
+/// Carries the full payload needed downstream
 /// </summary>
 public record ListingUpdatedEvent(
     Guid ListingId,
