@@ -6,7 +6,7 @@ using MediatR;
 namespace Application.Features.Queries;
 
 /// <summary>  
-/// Handles the query to retrieve user listings.  
+/// Implements the logic for executing the GetUserListingsHandler request
 /// </summary>  
 public class GetUserListingsHandler : IRequestHandler<GetUserListingsQuery, IEnumerable<ListingDto>>
 {

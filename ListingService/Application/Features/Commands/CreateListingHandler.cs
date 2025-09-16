@@ -6,6 +6,10 @@ using Messaging.RabbitMQ;
 
 namespace Application.Features.Commands;
 
+/// <summary>
+/// Implements the logic for executing the CreateListing request
+/// </summary>
+
 public class CreateListingHandler : IRequestHandler<CreateListingCommand, Guid>
 {
     private readonly IListingRepository _repo;

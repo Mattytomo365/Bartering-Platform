@@ -5,6 +5,9 @@ using Messaging.RabbitMQ;
 
 namespace Application.Features.Commands;
 
+/// <summary>
+/// Implements the logic for executing the UpdateListing request
+/// </summary>
 public class UpdateListingHandler : IRequestHandler<UpdateListingCommand, Unit>
 {
     private readonly IListingRepository _repo;

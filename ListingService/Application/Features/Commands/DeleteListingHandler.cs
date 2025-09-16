@@ -4,6 +4,10 @@ using Messaging.RabbitMQ;
 
 namespace Application.Features.Commands;
 
+/// <summary>
+/// Implements the logic for executing the DeleteListing request
+/// </summary>
+
 public class DeleteListingHandler : IRequestHandler<DeleteListingCommand, Unit>
 {
     private readonly IListingRepository _repo;

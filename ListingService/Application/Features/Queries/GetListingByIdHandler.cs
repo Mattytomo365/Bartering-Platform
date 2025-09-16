@@ -4,6 +4,9 @@ using AutoMapper;
 using MediatR;
 
 namespace Application.Features.Queries;
+/// <summary>
+/// Implements the logic for executing the GetListingById request
+/// </summary>
 
 public class GetListingByIdHandler : IRequestHandler<GetListingByIdQuery, ListingDetailDto>
 {
