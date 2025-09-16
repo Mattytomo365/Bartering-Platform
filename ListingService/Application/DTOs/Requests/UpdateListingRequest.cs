@@ -1,6 +1,8 @@
 ﻿namespace Application.DTOs.Requests;
 
-// Request/input DTO - the shape of what the client sends
+/// <summary>
+/// Request/input DTO - the shape of what the client sends for updating listings
+/// </summary>
 public class UpdateListingRequest
 {
     public Guid Id { get; init; }
