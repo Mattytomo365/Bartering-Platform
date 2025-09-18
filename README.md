@@ -4,7 +4,7 @@
 
 ## Overview
 
-Bartering Platform is a full-stack **.NET 8** & **Angular** microservices application designed to facilitate the exchange of goods between users.
+Bartering Platform is a full-stack **.NET 8 microservices** and **Angular** web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
 
 Users have the ability to create/edit/delete listings, search & discover listings for a specified location, and manage their profiles after authentication.
 
