@@ -1,5 +1,4 @@
-﻿using Application.Features.Commands;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Config;
 using Infrastructure.Contexts;
@@ -11,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 
 //using RabbitMQ.Client;
-using System.Reflection;
 using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,11 +22,7 @@ builder.Services.AddDbContext<ListDbContext>(options =>
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
 builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateListingHandler).Assembly)
-);
 
 // RabbitMq START Configuration *****************************************************************************************************
 var rabbitCfg = builder.Configuration.GetSection("RabbitMQ");

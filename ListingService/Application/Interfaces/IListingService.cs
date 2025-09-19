@@ -1,7 +1,5 @@
 ﻿using Application.DTOs.Requests;
 using Application.DTOs.Responses;
-using Application.Features.Commands;
-using Application.Features.Queries;
 
 namespace Application.Interfaces;
 
