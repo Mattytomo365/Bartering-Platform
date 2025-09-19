@@ -1,6 +1,5 @@
 ﻿using Application.Features.Commands;
 using Application.Interfaces;
-using Application.Services;
 using Infrastructure.Config;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
@@ -22,7 +21,6 @@ builder.Services.AddDbContext<ListDbContext>(options =>
 
 // Application Services
 builder.Services.AddScoped<IListingRepository, ListingRepository>();
-builder.Services.AddScoped<IListingService, ListingService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
