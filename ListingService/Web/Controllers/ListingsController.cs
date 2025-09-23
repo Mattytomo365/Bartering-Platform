@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.Requests;
 using Application.Interfaces;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -9,13 +8,10 @@ namespace Web.Controllers
     [ApiController]
     public class ListingsController : ControllerBase
     {
-        private readonly IMediator _mediator;
         private readonly IListingService _listingService;
 
-        public ListingsController(IMediator mediator,
-                                  IListingService listingService) 
+        public ListingsController(IListingService listingService) 
         {
-            _mediator = mediator;
             _listingService = listingService;
         }
 

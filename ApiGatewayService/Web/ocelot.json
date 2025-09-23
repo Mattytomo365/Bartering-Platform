@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/listings/{everything}",
+      "DownstreamPathTemplate": "/api/listings/{everything}", // downstream blocks point towards microservices
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
