@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
+// repository on write-side, should be dealing with aggregates
 public class ListingRepository : IListingRepository
 {
     private readonly ListDbContext _db;

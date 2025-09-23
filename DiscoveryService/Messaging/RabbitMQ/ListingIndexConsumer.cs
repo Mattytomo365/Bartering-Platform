@@ -12,7 +12,6 @@ namespace Messaging.RabbitMQ;
 
 public class ListingIndexConsumer : BackgroundService
 {
-    //private readonly IMediator _mediator;
     private readonly IServiceProvider _provider;
     private readonly IConfiguration _config;
     private IConnection? _connection;
@@ -20,7 +19,6 @@ public class ListingIndexConsumer : BackgroundService
 
     public ListingIndexConsumer(IServiceProvider provider, IConfiguration config)
     {
-        //_mediator = mediator;
         _provider = provider;
         _config = config;
     }

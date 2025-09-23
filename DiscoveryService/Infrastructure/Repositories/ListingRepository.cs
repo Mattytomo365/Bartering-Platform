@@ -9,6 +9,8 @@ using Application.Features.Commands;
 
 namespace Infrastructure.Repositories;
 
+// repository on read-side
+
 /// <summary>
 /// Repository for managing <see cref="SearchListing"/> entities, including upsert, search, and soft delete operations.
 /// </summary>
@@ -31,7 +33,7 @@ public class ListingRepository : IListingRepository
     public async Task UpsertAsync(UpsertListingCommand command, CancellationToken ct)
     {
         var existing = await _db.Listings.FindAsync(new object[] { command.ListingId }, ct);
-        if (existing == null)
+        if (existing == null) // handles duplicates
         {
             existing = new SearchListing
             {
