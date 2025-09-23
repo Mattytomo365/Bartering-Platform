@@ -1,9 +1,10 @@
 ﻿using Application.DTOs;
+using Application.Features.Queries;
 using Application.Interfaces;
 using AutoMapper;
 using MediatR;
 
-namespace Application.Features.Queries;
+namespace Application.Features.Handlers;
 
 /// <summary>  
 /// Implements the logic for executing the GetUserListingsHandler request

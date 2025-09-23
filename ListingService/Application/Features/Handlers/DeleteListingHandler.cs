@@ -1,8 +1,9 @@
-﻿using Application.Interfaces;
+﻿using Application.Features.Commands;
+using Application.Interfaces;
 using MediatR;
 using Messaging.RabbitMQ;
 
-namespace Application.Features.Commands;
+namespace Application.Features.Handlers;
 
 /// <summary>
 /// Implements the logic for executing the DeleteListing request
