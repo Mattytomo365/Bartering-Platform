@@ -30,7 +30,9 @@ Services are loosely coupled and independently deployable, all following **Clean
 
 **Command Query Responsibility Segragation** (CQRS) is adhered to within the microservices architecture, maintaining a strong read/write separation within the application's backend. The pattern is implemented using MediatR handlers to encapsulate logic fullfilling change of state requests expressed through Command classes, and reading of state expressed through Query classes.
 
-This architecture was simplified to a **service + repository** approach within the `main` branch. Controllers accept request DTOs and call application service methods to enforce domain rules via the Listing aggregate. A clear command/query separation remains without a mediators.
+The Listing Service's architecture was simplified to a **service + repository** approach within the `main` branch. Controllers accept request DTOs and call application service methods. A clear command/query separation remains without a mediators.
+
+Both the handlers and service methods within each pattern enforce domain rules via the Listing aggregate and persist via a repository.
 
 The unconverted CQRS-heavy approach can be viewed within the `cqrs` branch
 
