@@ -9,6 +9,8 @@ using Application.Features.Commands;
 
 namespace Infrastructure.Repositories;
 
+// repository on read-side
+
 /// <summary>
 /// Repository for managing <see cref="SearchListing"/> entities, including upsert, search, and soft delete operations.
 /// </summary>

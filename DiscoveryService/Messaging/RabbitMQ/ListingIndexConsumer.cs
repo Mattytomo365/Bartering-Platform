@@ -10,24 +10,46 @@ using System.Text.Json;
 
 namespace Messaging.RabbitMQ;
 
+/// <summary>
+/// Background worker that keeps the Discovery read model in sync by
+/// consuming listing events from RabbitMQ and invoking application
+/// commands (via MediatR) to upsert or delete rows in the search table.
+/// 
+/// Topology (from configuration):
+/// - Exchange: RabbitMQ:Exchange (topic, durable)
+/// - Queue:    RabbitMQ:Queue (durable), bound with routing key "listing.*"
+/// - VHost/Host/Port/User/Pass from RabbitMQ:*
+/// </summary>
+
 public class ListingIndexConsumer : BackgroundService
 {
-    //private readonly IMediator _mediator;
     private readonly IServiceProvider _provider;
     private readonly IConfiguration _config;
     private IConnection? _connection;
     private IChannel? _channel;
 
+    /// <summary>
+    /// Creates the consumer; stores DI services and configuration.
+    /// Does not open any RabbitMQ connections/channels here.
+    /// </summary>
+    /// <param name="provider">Root service provider. A new scope is created per message.</param>
+    /// <param name="config">Configuration source (reads RabbitMQ:Host, Username, Password, VirtualHost, Port, Exchange, Queue).</param>
     public ListingIndexConsumer(IServiceProvider provider, IConfiguration config)
     {
-        //_mediator = mediator;
         _provider = provider;
         _config = config;
     }
 
+
+    /// <summary>
+    /// - Validates required RabbitMQ settings.
+    /// - Creates a connection and channel (async).
+    /// - Declares the topic exchange (durable), queue (durable), and binds with "listing.*".
+    /// - Leaves the channel open for <see cref="ExecuteAsync"/> to consume messages.
+    /// </summary>
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        // 1) Read settings
+        // read settings
         var host = _config["RabbitMQ:Host"] ?? throw new InvalidOperationException("RabbitMQ:Host is not configured.");
         var username = _config["RabbitMQ:Username"] ?? throw new InvalidOperationException("RabbitMQ:Username is not configured.");
         var password = _config["RabbitMQ:Password"] ?? throw new InvalidOperationException("RabbitMQ:Password is not configured.");
@@ -38,7 +60,7 @@ public class ListingIndexConsumer : BackgroundService
         if (!int.TryParse(portString, out var port))
             throw new InvalidOperationException("RabbitMQ:Port must be a valid integer.");
 
-        // 2) Build the factory
+        // build the factory
         var factory = new ConnectionFactory
         {
             HostName = host,
@@ -48,11 +70,11 @@ public class ListingIndexConsumer : BackgroundService
             Port = port
         };
 
-        // 3) Create the connection & channel
+        // create the connection & channel
         _connection = await factory.CreateConnectionAsync();
         _channel = await _connection.CreateChannelAsync();
 
-        // 4) Declare exchange, queue, bind
+        // declare exchange, queue, bind
         await _channel.ExchangeDeclareAsync(
             exchange,
             ExchangeType.Topic,
@@ -80,24 +102,29 @@ public class ListingIndexConsumer : BackgroundService
         await base.StartAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Main loop of the background service. Subscribes an async consumer to the configured
+    /// queue and processes messages until the host is shutting down.
+    /// </summary>
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         if (_channel is null)
             throw new InvalidOperationException("RabbitMQ channel is not initialized.");
 
-        // 5) Create the async consumer
+        // create the async consumer
         var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.ReceivedAsync += async (sender, ea) =>
         {
             try
             {
+                // decode message body
                 var body = ea.Body.ToArray();
                 var json = Encoding.UTF8.GetString(body);
 
-                // 1) Create a DI scope for this message
+                // create a DI scope for this message
                 using var scope = _provider.CreateScope();
 
-                // 2) Resolve MediatR (and thus the handlers + DbContext) from the scope
+                // resolve MediatR (and thus the handlers + DbContext) from the scope
                 var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
                 var type = ea.RoutingKey;
@@ -134,7 +161,7 @@ public class ListingIndexConsumer : BackgroundService
             }
         };
 
-        // 6) Start consuming
+        // start consuming
         await _channel.BasicConsumeAsync(
             queue: _config["RabbitMQ:Queue"]!,
             autoAck: false,
@@ -142,7 +169,7 @@ public class ListingIndexConsumer : BackgroundService
             cancellationToken: stoppingToken
         );
 
-        // 7) Keep the service alive
+        // keep the service alive
         try
         {
             await Task.Delay(Timeout.Infinite, stoppingToken);
@@ -150,6 +177,10 @@ public class ListingIndexConsumer : BackgroundService
         catch (TaskCanceledException) { /* graceful exit */ }
     }
 
+    /// <summary>
+    /// Attempts a graceful shutdown: closes the RabbitMQ channel and connection, then
+    /// defers to the base implementation to complete background service shutdown.
+    /// </summary>
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
         if (_channel != null) await _channel.CloseAsync(cancellationToken);
@@ -157,6 +188,10 @@ public class ListingIndexConsumer : BackgroundService
         await base.StopAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Disposes the RabbitMQ channel and connection resources created during startup.
+    /// Safe to call multiple times.
+    /// </summary>
     public override void Dispose()
     {
         _channel?.Dispose();

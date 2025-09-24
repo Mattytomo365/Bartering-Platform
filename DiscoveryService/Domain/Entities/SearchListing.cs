@@ -2,6 +2,11 @@
 
 namespace Domain.Entities;
 
+/// <summary>
+/// Read-model projection used by DiscoveryService for search/FTS.
+/// Not a domain aggregate: no business invariants or domain events.
+/// Populated asynchronously from listing.* events.
+/// </summary>
 public class SearchListing
 {
     public Guid ListingId { get; set; }

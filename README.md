@@ -4,7 +4,7 @@
 
 ## Overview
 
-Bartering Platform is a full-stack **.NET 8 microservices** and **Angular** web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
+Bartering Platform is a full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
 
 Users have the ability to create/edit/delete listings, search & discover listings for a specified location, and manage their profiles after authentication.
 
@@ -24,13 +24,13 @@ Users have the ability to create/edit/delete listings, search & discover listing
 Services are loosely coupled and independently deployable, all following **Clean Architecture** implemented through several NET class libraries:
 
 - **ApiGatewayService**: Central entry point for client requests, routing to appropriate backend services.
-- **DiscoveryService**: Consumes listing events and indexes/searches listings.
-- **ListingService**: Manages item/service listings.
-- **ProfileService**: Handles user profiles and related data.
+- **ListingService**: Handles listing commands (create/update/delete), persisting to its own database alongside publishing listing integration events to RabbitMQ.
+- **DiscoveryService**: Consumes listing integration events and projects data into a search-optimised table indexed by SQL Server Full-Text-Search (FTS), which is queried by exposed search endpoints.
+- **ProfileService**: A separate bounded context handling user profiles and related data.
 
-**Command Query Responsibility Segragation** (CQRS) is adhered to within the microservices architecture, further improving the modularity & maintainability of the application's backend. The pattern is implemented using MediatR handlers to encapsulate logic fullfilling change of/reading state requests expressed through Command/Query classes.
+**Command Query Responsibility Segragation** (CQRS) is adhered to within the microservices architecture, maintaining a strong read/write separation within the application's backend. The pattern is implemented using MediatR handlers to encapsulate logic fullfilling change of state requests expressed through Command classes, and reading of state expressed through Query classes.
 
-This architecture was simplified to a **service + repository** approach within the `main` branch. Controllers accept request DTOs and call application service methods to enforce domain rules via the Listing aggregate. A clear command/query separation remains without a mediator or a separate read store.
+This architecture was simplified to a **service + repository** approach within the `main` branch. Controllers accept request DTOs and call application service methods to enforce domain rules via the Listing aggregate. A clear command/query separation remains without a mediators.
 
 The unconverted CQRS-heavy approach can be viewed within the `cqrs` branch
 
