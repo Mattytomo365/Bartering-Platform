@@ -10,6 +10,7 @@ using Application.Features.Commands;
 namespace Infrastructure.Repositories;
 
 // repository on read-side
+// commands/queries passed because Discovery Service deals in projection rows and doesnt need to enforce invariants via an aggregate
 
 /// <summary>
 /// Repository for managing <see cref="SearchListing"/> entities, including upsert, search, and soft delete operations.

@@ -1,6 +1,9 @@
 ﻿namespace Application.DTOs;
 
-public class DiscoveryListingDto
+/// <summary>
+/// Query DTO - read model returned to client corresponding to a search result row
+/// </summary>
+public class ListingDetailDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = null!;

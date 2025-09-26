@@ -1,5 +1,8 @@
 ﻿namespace Application.DTOs;
 
+/// <summary>
+/// Response/output DTO - read model returned to client corresponding to a search result row
+/// </summary>
 public class ListingSummary
 {
     public Guid ListingId { get; set; }

@@ -1,5 +1,9 @@
 ﻿namespace Application.DTOs;
 
+/// <summary>
+/// Response/output DTO - read model returned to client after querying for specified product
+/// </summary>
+
 public class SearchResult
 {
     public int Total { get; set; }
