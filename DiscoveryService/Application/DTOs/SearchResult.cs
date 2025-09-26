@@ -1,6 +1,4 @@
-﻿using Application.DTOs;
-
-namespace Application.Features.Queries;
+﻿namespace Application.DTOs;
 
 public class SearchResult
 {

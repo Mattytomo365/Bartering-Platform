@@ -13,6 +13,7 @@ namespace Infrastructure.Repositories;
 
 /// <summary>
 /// Repository for managing <see cref="SearchListing"/> entities, including upsert, search, and soft delete operations.
+/// The read-model's projector
 /// </summary>
 public class ListingRepository : IListingRepository
 {

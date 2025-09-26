@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Repositories;
 
 // repository on write-side, should be dealing with aggregates
+// passes listing within all methods to enforce invariants?
 
 public class ListingRepository : IListingRepository
 {
@@ -15,7 +16,7 @@ public class ListingRepository : IListingRepository
     public async Task<Listing> GetByIdAsync(Guid id) =>
         await _db.Listings.FirstOrDefaultAsync(l => l.Id == id && l.IsActive)
         ?? throw new InvalidOperationException("Listing not found.");
-    public async Task<IEnumerable<Listing>> GetByOwnerAsync(string ownerId) =>
+    public async Task<IEnumerable<Listing>> GetByOwnerAsync(string ownerId) => 
         await _db.Listings.Where(l => l.OwnerId == ownerId && l.IsActive).ToListAsync();
     public Task UpdateAsync(Listing listing)
     {

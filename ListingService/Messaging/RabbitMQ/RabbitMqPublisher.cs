@@ -20,7 +20,8 @@ public class RabbitMqPublisher : IRabbitMqPublisher
 
     public async Task PublishAsync(object @event)
     {
-        var routingKey = @event.GetType().Name switch
+        // serialise domain events and publish to listing.events exchange with routing keys
+        var routingKey = @event.GetType().Name switch 
         {
             "ListingCreatedEvent" => "listing.created",
             "ListingUpdatedEvent" => "listing.updated",
