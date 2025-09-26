@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs;
 
-public class DiscoveryListingDto
+public class ListingDetailDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = null!;
