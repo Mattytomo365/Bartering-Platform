@@ -1,5 +1,10 @@
 ﻿namespace Domain.Entities;
 
+/// <summary>
+/// Domain entity / write model / aggregate root for profile actions
+/// Encapsulates state + behavior and enforces few invariants
+/// </summary>
+
 public class ProfileLocation
 {
     public int Id { get; set; }

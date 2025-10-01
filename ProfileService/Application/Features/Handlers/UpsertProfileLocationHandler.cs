@@ -21,9 +21,9 @@ public class UpsertProfileLocationHandler : IRequestHandler<UpsertProfileLocatio
         var profile = new ProfileLocation
         {
             UserId = _currentUser.UserId,
-            DisplayName = req.Location.DisplayName,
-            Latitude = req.Location.Latitude,
-            Longitude = req.Location.Longitude
+            DisplayName = req.DisplayName,
+            Latitude = req.Latitude,
+            Longitude = req.Longitude
         };
 
         await _repo.UpsertAsync(profile);

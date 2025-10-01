@@ -22,9 +22,9 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost("location")]
-    public async Task<IActionResult> UpsertLocation([FromBody] ProfileLocationDto location)
+    public async Task<IActionResult> UpsertLocation(UpsertProfileLocationCommand cmd, CancellationToken ct)
     {
-        await _mediator.Send(new UpsertProfileLocationCommand { Location = location });
+        await _mediator.Send(cmd, ct);
         return NoContent();
     }
 }
