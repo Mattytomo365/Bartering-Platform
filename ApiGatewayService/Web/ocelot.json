@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/listings/{everything}", // downstream blocks point towards microservices
+      "DownstreamPathTemplate": "/api/listings/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -17,11 +17,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/discovery/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7143
+          "Port": 5084
         }
       ],
       "UpstreamPathTemplate": "/api/discovery/{everything}",
@@ -30,11 +30,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7199
+          "Port": 5114
         }
       ],
       "UpstreamPathTemplate": "/api/profile/{everything}",
