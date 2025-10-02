@@ -3,6 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
+
+/// <summary>
+/// Read-only API over the Discovery read model (projection).
+/// Exposes search endpoints backed by SQL Server Full-Text Search (FTS),
+/// with optional category/geo filters, sorting, and paging.
+/// This controller does not mutate state; projection writes are performed
+/// asynchronously by the RabbitMQ consumer applying listing.* events.
+/// </summary>
 {
     [Route("api/[controller]")]
     [ApiController]

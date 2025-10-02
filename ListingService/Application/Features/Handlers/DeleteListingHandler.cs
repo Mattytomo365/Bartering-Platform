@@ -20,7 +20,7 @@ public class DeleteListingHandler : IRequestHandler<DeleteListingCommand, Unit>
     }
     public async Task<Unit> Handle(DeleteListingCommand req, CancellationToken ct)
     {
-        var listing = await _repo.GetByIdAsync(req.Id);
+        var listing = await _repo.GetByIdAsync(req.Id); // aggregate rehydrated through repository
 
         await _repo.UpdateAsync(listing);
         await _repo.SaveChangesAsync();

@@ -9,7 +9,7 @@ namespace Application.Features.Handlers;
 /// <summary>
 /// Fetches single listings related to a specific user, read use case 
 /// Accepts GetUserListingsQuery as input model
-/// Maps to a listing DTO output shape
+/// Maps returned aggregate to a listing DTO output shape
 /// </summary>  
 public class GetUserListingsHandler : IRequestHandler<GetUserListingsQuery, IEnumerable<ListingDto>>
 {

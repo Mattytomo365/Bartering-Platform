@@ -30,7 +30,7 @@ public class ListingRepository : IListingRepository
 
     public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
 
-    // Rehydraton & simple non-search reads from write DB
+    // Rehydraton & simple non-search reads from write DB, returns aggregates to be mapped within handlers
     public async Task<Listing> GetByIdAsync(Guid id) =>
         await _db.Listings.FirstOrDefaultAsync(l => l.Id == id && l.IsActive)
         ?? throw new InvalidOperationException("Listing not found.");

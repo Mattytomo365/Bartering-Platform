@@ -10,6 +10,7 @@ namespace Application.Features.Handlers;
 /// <summary>
 /// Orchestrates and encapsulates write use case for domain creation, persistence, and event publication
 /// Accepts CreateListingCommand as input model
+/// Constructs aggregate and enforces invariants before persisting
 /// </summary>
 
 public class CreateListingHandler : IRequestHandler<CreateListingCommand, Guid>

@@ -23,13 +23,13 @@ public class UpdateListingHandler : IRequestHandler<UpdateListingCommand, Unit>
 
     public async Task<Unit> Handle(UpdateListingCommand req, CancellationToken ct)
     {
-        var listing = await _repo.GetByIdAsync(req.Id);
+        var listing = await _repo.GetByIdAsync(req.Id); // repository rehydrates aggregate
         if (listing == null)
             throw new Exception($"Listing with ID {req.Id} not found.");
 
         var wants = req.Wants ?? new List<string>();
 
-        listing.Update(
+        listing.Update( // invariants enforced on changes made to aggregate
             req.Title, req.Description, new Money(req.PriceAmount, req.PriceCurrency), wants,
             req.Category, req.Condition, req.Latitude, req.Longitude
         );
