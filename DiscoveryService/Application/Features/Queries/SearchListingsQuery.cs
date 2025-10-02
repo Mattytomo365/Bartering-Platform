@@ -7,7 +7,7 @@ namespace Application.Features.Queries;
 /// Input model for full-text/filtered search over the Discovery read model
 /// </summary>
 
-public class SearchListingsQuery : IRequest<SearchResult>
+public class SearchListingsQuery : IRequest<SearchResultDto>
 {
     public string? Q { get; init; }
     public string? Category { get; init; } = "all";

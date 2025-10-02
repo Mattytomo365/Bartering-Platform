@@ -5,8 +5,8 @@ using MediatR;
 namespace Application.Features.Handlers;
 
 /// <summary>
-/// Applies a listing.* event to the read model by upserting the SearchListing row.
-/// Idempotent by ListingId. No domain invariants here—this is a projection write.
+/// Applies a listing.* event to the read model by upserting the SearchListing row
+/// Idempotent by ListingId. No domain invariants here—this is a projection write use case
 /// </summary>
 public class UpsertListingHandler : IRequestHandler<UpsertListingCommand, Unit>
 {

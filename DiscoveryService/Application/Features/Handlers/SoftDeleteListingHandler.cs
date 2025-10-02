@@ -4,6 +4,11 @@ using MediatR;
 
 namespace Application.Features.Handlers;
 
+/// <summary>
+/// Orchestrates projection write use case
+/// Removes listing from read model and search results
+/// Persists via repository
+/// </summary>
 public class SoftDeleteListingHandler : IRequestHandler<SoftDeleteListingCommand, Unit>
 {
     private readonly IListingRepository _repo;

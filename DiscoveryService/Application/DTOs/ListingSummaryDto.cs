@@ -1,6 +1,11 @@
 ﻿namespace Application.DTOs;
 
-public class ListingSummary
+/// <summary>
+/// Output model built from read model projection via repository for a client-friendly output shape
+/// One projected SearchListing row
+/// </summary>
+
+public class ListingSummaryDto
 {
     public Guid ListingId { get; set; }
     public required string Title { get; set; }

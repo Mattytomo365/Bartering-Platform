@@ -2,6 +2,12 @@
 
 namespace Application.Features.Commands;
 
+/// <summary>
+/// Input model
+/// Application message expressing the intent to project an incoming integration event into the read model
+/// Carries data needed to perform the action
+/// </summary>
+
 public class UpsertListingCommand : IRequest<Unit>
 {
     public Guid ListingId { get; init; }

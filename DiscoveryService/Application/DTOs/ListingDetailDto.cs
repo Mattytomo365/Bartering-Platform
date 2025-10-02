@@ -3,7 +3,7 @@
 public class ListingDetailDto
 
 /// <summary>
-/// Output model mapped from SearchListing entity (by handler) for a client-friendly output shape
+/// Output model mapped from SearchListing entity for a client-friendly output shape
 /// </summary>
 {
     public Guid Id { get; set; }
