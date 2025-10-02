@@ -29,8 +29,7 @@ public class Listing
     private readonly List<object> _events = new();
     public IReadOnlyCollection<object> Events => _events.AsReadOnly();
 
-    // EF Core needs this
-    [SetsRequiredMembers] // Tells the compiler that this constructor sets required members
+    [SetsRequiredMembers]
     protected Listing()
     {
         // Initialize collections to avoid null refs  
@@ -49,7 +48,7 @@ public class Listing
     /// <summary>
     /// Constructor used to create a valid listing and enforce invariants
     /// </summary>
-    [SetsRequiredMembers] // Tells the compiler that this constructor sets required members
+    [SetsRequiredMembers]
     public Listing(
         string ownerId,
         string title,
@@ -60,7 +59,7 @@ public class Listing
         string condition,
         double? latitude = null,
         double? longitude = null)
-        : this() // delegate to the parameterless one  
+        : this() 
     {
         OwnerId = ownerId;
         Title = title;
@@ -73,10 +72,6 @@ public class Listing
         Longitude = longitude;
         CreatedAt = DateTime.UtcNow;
 
-        //AddEvent(new ListingCreatedEvent(
-        //    Id, Title, Description, Category, Condition,
-        //    Latitude ?? 0, Longitude ?? 0, CreatedAt
-        //));
     }
 
     /// <summary>

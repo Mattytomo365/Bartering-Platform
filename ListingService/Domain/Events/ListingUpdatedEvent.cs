@@ -1,7 +1,9 @@
 ﻿namespace Domain.Events;
 
 /// <summary>
-/// Carries the full payload needed downstream
+/// Raised by Listing entity
+/// Carries the full payload needed downstream for RabbitMQ publishing
+/// Published by handlers
 /// </summary>
 public record ListingUpdatedEvent(
     Guid ListingId,

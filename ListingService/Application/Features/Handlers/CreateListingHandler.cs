@@ -8,7 +8,8 @@ using Messaging.RabbitMQ;
 namespace Application.Features.Handlers;
 
 /// <summary>
-/// Implements the logic for executing the CreateListing request
+/// Orchestrates and encapsulates write use case for domain creation, persistence, and event publication
+/// Accepts CreateListingCommand as input model
 /// </summary>
 
 public class CreateListingHandler : IRequestHandler<CreateListingCommand, Guid>
@@ -24,7 +25,7 @@ public class CreateListingHandler : IRequestHandler<CreateListingCommand, Guid>
 
     public async Task<Guid> Handle(CreateListingCommand req, CancellationToken ct)
     {
-        // 1) Use the constructor that enforces invariants
+        // Enforces invariants using constructor
         var listing = new Listing(
             ownerId: req.OwnerId,
             title: req.Title,
@@ -37,7 +38,7 @@ public class CreateListingHandler : IRequestHandler<CreateListingCommand, Guid>
             longitude: req.Longitude
         );
 
-        // 2) Now populate the photos (and any other collections)
+        // Populates photos (and any other collections)
         if (req.PhotoUrls != null && req.PhotoUrls.Count > 0)
         {
             listing.PhotoUrls.AddRange(req.PhotoUrls);

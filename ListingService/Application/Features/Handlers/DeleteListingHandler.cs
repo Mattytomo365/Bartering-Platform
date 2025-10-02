@@ -6,7 +6,8 @@ using Messaging.RabbitMQ;
 namespace Application.Features.Handlers;
 
 /// <summary>
-/// Implements the logic for executing the DeleteListing request
+/// Orchestrates and encapsulates write use case for domain deletion, persistence, and event publication
+/// Accepts DeleteListingCommand as input model
 /// </summary>
 
 public class DeleteListingHandler : IRequestHandler<DeleteListingCommand, Unit>
@@ -20,7 +21,6 @@ public class DeleteListingHandler : IRequestHandler<DeleteListingCommand, Unit>
     public async Task<Unit> Handle(DeleteListingCommand req, CancellationToken ct)
     {
         var listing = await _repo.GetByIdAsync(req.Id);
-        //listing.Delete();
 
         await _repo.UpdateAsync(listing);
         await _repo.SaveChangesAsync();

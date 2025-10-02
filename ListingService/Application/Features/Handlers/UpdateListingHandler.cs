@@ -7,7 +7,8 @@ using Messaging.RabbitMQ;
 namespace Application.Features.Handlers;
 
 /// <summary>
-/// Implements the logic for executing the UpdateListing request
+/// Orchestrates and encapsulates write use case for domain modification, persistence, and event publication
+/// Accepts UpdateListingCommand as input model
 /// </summary>
 public class UpdateListingHandler : IRequestHandler<UpdateListingCommand, Unit>
 {
@@ -26,7 +27,6 @@ public class UpdateListingHandler : IRequestHandler<UpdateListingCommand, Unit>
         if (listing == null)
             throw new Exception($"Listing with ID {req.Id} not found.");
 
-        // Ensure Wants is not null by creating a new list if it is null  
         var wants = req.Wants ?? new List<string>();
 
         listing.Update(
@@ -34,8 +34,8 @@ public class UpdateListingHandler : IRequestHandler<UpdateListingCommand, Unit>
             req.Category, req.Condition, req.Latitude, req.Longitude
         );
 
-        // Check PhotoUrls is not null  
-        if (req.PhotoUrls != null && req.PhotoUrls.Count > 0)
+ 
+        if (req.PhotoUrls != null && req.PhotoUrls.Count > 0) // PhotoUrls null validation
         {
             listing.PhotoUrls.Clear();
             listing.PhotoUrls.AddRange(req.PhotoUrls!);

@@ -1,6 +1,8 @@
 ﻿namespace Application.DTOs;
 
-// Response/output DTO - read model returned to client
+/// <summary>
+/// Output model mapped from Listing aggregate (by handler) for a client-friendly output shape
+/// </summary>
 public class ListingDto
 {
     public Guid Id { get; set; }

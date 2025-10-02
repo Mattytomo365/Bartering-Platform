@@ -6,7 +6,9 @@ using MediatR;
 
 namespace Application.Features.Handlers;
 /// <summary>
-/// Implements the logic for executing the GetListingById request
+/// Fetches single listing by Id from write model, read use case
+/// Accepts GetListingByIdQuery as input model
+/// Maps to a detail DTO output shape
 /// </summary>
 
 public class GetListingByIdHandler : IRequestHandler<GetListingByIdQuery, ListingDetailDto>

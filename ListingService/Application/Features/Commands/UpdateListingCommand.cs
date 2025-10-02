@@ -2,8 +2,10 @@
 
 namespace Application.Features.Commands;
 
-/// <summary>  
-/// A message capturing the intent of the user for changing listing state
+/// <summary>
+/// Input model
+/// A message expressing the intent for updating a listing
+/// Carries data needed to perform the action
 /// </summary>
 public class UpdateListingCommand : IRequest<Unit>
 {

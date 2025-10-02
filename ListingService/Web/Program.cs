@@ -5,11 +5,9 @@ using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Messaging.RabbitMQ;
 
-//using Messaging.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 
-//using RabbitMQ.Client;
 using System.Reflection;
 using Web.Middleware;
 

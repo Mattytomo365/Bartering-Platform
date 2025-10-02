@@ -3,8 +3,10 @@ using MediatR;
 
 namespace Application.Features.Queries;
 
-/// <summary>  
-/// A message capturing the intent of the user for reading listing state
+/// <summary>
+/// Input model
+/// Application query message to fetch a single Listing by Id
+/// Carries data needed to perform the action
 /// </summary>
 public class GetListingByIdQuery : IRequest<ListingDetailDto>
 { 
