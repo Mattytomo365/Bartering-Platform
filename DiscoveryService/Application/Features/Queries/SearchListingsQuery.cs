@@ -3,7 +3,11 @@ using MediatR;
 
 namespace Application.Features.Queries;
 
-public class SearchListingsQuery : IRequest<SearchResult>
+/// <summary>
+/// Input model for full-text/filtered search over the Discovery read model
+/// </summary>
+
+public class SearchListingsQuery : IRequest<SearchResultDto>
 {
     public string? Q { get; init; }
     public string? Category { get; init; } = "all";

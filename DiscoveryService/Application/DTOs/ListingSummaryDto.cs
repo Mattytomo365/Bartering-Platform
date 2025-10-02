@@ -1,9 +1,10 @@
 ﻿namespace Application.DTOs;
 
 /// <summary>
-/// Response/output DTO - read model returned to client corresponding to a search result row
+/// Output model built from read model projection via repository for a client-friendly output shape
+/// One projected SearchListing row
 /// </summary>
-public class ListingSummary
+public class ListingSummaryDto
 {
     public Guid ListingId { get; set; }
     public required string Title { get; set; }

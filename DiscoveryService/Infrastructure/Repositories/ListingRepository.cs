@@ -9,33 +9,26 @@ using Application.Features.Commands;
 
 namespace Infrastructure.Repositories;
 
-// repository on read-side
-// commands/queries passed because Discovery Service deals in projection rows and doesnt need to enforce invariants via an aggregate
-
 /// <summary>
-/// Repository for managing <see cref="SearchListing"/> entities, including upsert, search, and soft delete operations.
-/// The read-model's projector
+/// Read-side repository
+/// Maintains projection via upsert/soft-delete in response to events
+/// Projects rows to DTOs (ListingSummary) wrapping them in SearchResult DTO
 /// </summary>
+
 public class ListingRepository : IListingRepository
 {
     private readonly SearchDbContext _db;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ListingRepository"/> class.
-    /// </summary>
-    /// <param name="db">The database context to use for data access.</param>
     public ListingRepository(SearchDbContext db) => _db = db;
 
     /// <summary>
     /// Inserts or updates a <see cref="SearchListing"/> entity based on the provided command.
     /// </summary>
-    /// <param name="command">The upsert command containing listing data.</param>
-    /// <param name="ct">A cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task UpsertAsync(UpsertListingCommand command, CancellationToken ct)
     {
         var existing = await _db.Listings.FindAsync(new object[] { command.ListingId }, ct);
-        if (existing == null)
+        if (existing == null) // handles duplicates
         {
             existing = new SearchListing
             {
@@ -66,11 +59,8 @@ public class ListingRepository : IListingRepository
     /// Searches for listings based on the specified query parameters.
     /// Supports full-text search, category filtering, location-based filtering, and sorting.
     /// </summary>
-    /// <param name="req">The search query parameters.</param>
-    /// <param name="ct">A cancellation token.</param>
-    /// <returns>A <see cref="SearchResult"/> containing the search results and metadata.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if full-text search is requested but not configured.</exception>
-    public async Task<SearchResult> SearchAsync(SearchListingsQuery req, CancellationToken ct)
+    /// <returns>A <see cref="SearchResultDto"/> containing the search results and metadata.</returns>
+    public async Task<SearchResultDto> SearchAsync(SearchListingsQuery req, CancellationToken ct)
     {
         // Initialize user location point if latitude and longitude are provided
         Point? userPoint = null;
@@ -123,7 +113,7 @@ public class ListingRepository : IListingRepository
             var items = await ftQuery
                 .Skip((req.Page!.Value - 1) * req.PageSize!.Value)
                 .Take(req.PageSize!.Value)
-                .Select(x => new ListingSummary
+                .Select(x => new ListingSummaryDto
                 {
                     ListingId = x.Listing.ListingId,
                     Title = x.Listing.Title,
@@ -142,7 +132,7 @@ public class ListingRepository : IListingRepository
                 .ToListAsync(ct);
 
             // Return the search result with total count and paged items
-            return new SearchResult
+            return new SearchResultDto
             {
                 Total = total,
                 Page = req.Page.Value,
@@ -181,7 +171,7 @@ public class ListingRepository : IListingRepository
             var items = await listings
                 .Skip((req.Page!.Value - 1) * req.PageSize!.Value)
                 .Take(req.PageSize!.Value)
-                .Select(l => new ListingSummary
+                .Select(l => new ListingSummaryDto
                 {
                     ListingId = l.ListingId,
                     Title = l.Title,
@@ -200,7 +190,7 @@ public class ListingRepository : IListingRepository
                 .ToListAsync(ct);
 
             // Return the search result with total count and paged items
-            return new SearchResult
+            return new SearchResultDto
             {
                 Total = total,
                 Page = req.Page.Value,
@@ -213,8 +203,6 @@ public class ListingRepository : IListingRepository
     /// <summary>
     /// Soft deletes a listing by marking it as unavailable.
     /// </summary>
-    /// <param name="listingId">The unique identifier of the listing to delete.</param>
-    /// <param name="ct">A cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task SoftDeleteAsync(Guid listingId, CancellationToken ct)
     {

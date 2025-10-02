@@ -1,7 +1,7 @@
 ﻿namespace Application.DTOs;
 
 /// <summary>
-/// Query DTO - read model returned to client corresponding to a search result row
+/// Output model mapped from SearchListing entity for a client-friendly output shape
 /// </summary>
 public class ListingDetailDto
 {
