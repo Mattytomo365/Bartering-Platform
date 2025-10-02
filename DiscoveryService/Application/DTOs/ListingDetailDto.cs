@@ -1,6 +1,10 @@
 ﻿namespace Application.DTOs;
 
 public class ListingDetailDto
+
+/// <summary>
+/// Output model mapped from SearchListing entity (by handler) for a client-friendly output shape
+/// </summary>
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = null!;

@@ -1,8 +1,13 @@
-﻿using Application.Interfaces;
+﻿using Application.Features.Commands;
+using Application.Interfaces;
 using MediatR;
 
-namespace Application.Features.Commands;
+namespace Application.Features.Handlers;
 
+/// <summary>
+/// Applies a listing.* event to the read model by upserting the SearchListing row.
+/// Idempotent by ListingId. No domain invariants here—this is a projection write.
+/// </summary>
 public class UpsertListingHandler : IRequestHandler<UpsertListingCommand, Unit>
 {
     private readonly IListingRepository _repo;

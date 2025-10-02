@@ -1,8 +1,9 @@
 ﻿using Application.DTOs;
+using Application.Features.Queries;
 using Application.Interfaces;
 using MediatR;
 
-namespace Application.Features.Queries
+namespace Application.Features.Handlers
 {
     public class SearchListingsHandler : IRequestHandler<SearchListingsQuery, SearchResult>
     {
