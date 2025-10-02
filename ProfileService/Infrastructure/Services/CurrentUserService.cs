@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Services;
 
+/// <summary>
+/// Provides the current user's identifier based on the HTTP context.
+/// </summary>
+/// <remarks>This service retrieves the user ID from the HTTP request headers. The user ID is expected to be
+/// provided in the "X-User-Id" header. If the header is missing, empty, or invalid, an  <see
+/// cref="UnauthorizedAccessException"/> is thrown.</remarks>
 public class CurrentUserService : ICurrentUserService
 {
     private const string USER_ID_HEADER = "X-User-Id";

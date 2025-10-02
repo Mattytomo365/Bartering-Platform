@@ -5,15 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
+/// <summary>  
+/// Write-side repository
+/// Persists and rehydrates Listing aggregate
+/// </summary>
+
 public class ProfileRepository : IProfileRepository
 {
     private readonly ProfileDbContext _db;
 
     public ProfileRepository(ProfileDbContext db) => _db = db;
 
-    public async Task<ProfileLocation?> GetByUserIdAsync(string userId) =>
-        await _db.ProfileLocations.FirstOrDefaultAsync(pl => pl.UserId == userId);
-
+    // Write-side persistence
     public async Task UpsertAsync(ProfileLocation profile)
     {
         var existing = await _db.ProfileLocations.FirstOrDefaultAsync(p => p.UserId == profile.UserId);
@@ -27,4 +30,10 @@ public class ProfileRepository : IProfileRepository
     }
 
     public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
+
+    // Rehydration of aggregates, returned to handlers
+    public async Task<ProfileLocation?> GetByUserIdAsync(string userId) =>
+        await _db.ProfileLocations.FirstOrDefaultAsync(pl => pl.UserId == userId);
+
+
 }

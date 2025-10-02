@@ -3,6 +3,11 @@ using Application.Features.Queries;
 using Application.Interfaces;
 using MediatR;
 
+/// <summary>
+/// Fetches single listing by Id from write model, read use case
+/// Accepts GetProfileLocation as input model
+/// Maps returned aggregate to a detail DTO output shape
+/// </summary>
 namespace Application.Features.Handlers;
 public class GetProfileLocationHandler : IRequestHandler<GetProfileLocationQuery, ProfileLocationDto?>
 {
