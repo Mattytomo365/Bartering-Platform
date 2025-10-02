@@ -5,6 +5,11 @@ using MediatR;
 
 namespace Application.Features.Handlers;
 
+/// <summary>
+/// Applies command to the write model by upserting location via constructed ProfileLocation aggregate to enforce invariants
+/// Persists via repository
+/// </summary>
+
 public class UpsertProfileLocationHandler : IRequestHandler<UpsertProfileLocationCommand, Unit>
 {
     private readonly IProfileRepository _repo;
