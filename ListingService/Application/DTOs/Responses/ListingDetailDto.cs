@@ -1,7 +1,7 @@
 ﻿namespace Application.DTOs.Responses;
 
 /// <summary>
-/// Response/output DTO - read model returned to client after querying listing details
+/// Output model mapped from Listing aggregate (by service) for a client-friendly output shape
 /// </summary>
 
 public class ListingDetailDto

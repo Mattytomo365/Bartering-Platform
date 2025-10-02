@@ -5,11 +5,11 @@ using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Messaging.RabbitMQ;
 
-//using Messaging.RabbitMQ;
+
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 
-//using RabbitMQ.Client;
+
 using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);

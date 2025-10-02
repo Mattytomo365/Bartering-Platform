@@ -1,7 +1,8 @@
 ﻿namespace Application.DTOs.Requests;
 
 /// <summary>
-/// Request/input DTO - the shape of what the client sends for reading listings by id
+/// Input model
+/// Transport shape carrying request data for listing by id retrieval
 /// </summary>
 public class GetListingByIdRequest
 {

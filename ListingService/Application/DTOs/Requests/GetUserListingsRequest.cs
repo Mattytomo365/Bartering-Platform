@@ -1,7 +1,8 @@
 ﻿namespace Application.DTOs.Requests;
 
 /// <summary>
-/// Request/input DTO - the shape of what the client sends for retrieving user listings
+/// Input model
+/// Transport shape carrying request data for user listing retrieval
 /// </summary>
 public class GetUserListingsRequest
 {

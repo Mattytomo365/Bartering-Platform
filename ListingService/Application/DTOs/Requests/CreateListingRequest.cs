@@ -1,7 +1,8 @@
 ﻿namespace Application.DTOs.Requests;
 
 /// <summary>
-/// Request/input DTO - the shape of what the client sends for creating listings
+/// Input model
+/// Transport shape carrying request data for listing creation
 /// </summary>
 
 public class CreateListingRequest

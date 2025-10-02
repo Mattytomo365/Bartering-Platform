@@ -10,6 +10,12 @@ using Messaging.RabbitMQ;
 
 namespace Application.Services;
 
+/// <summary>
+/// Orchestrator for all use-cases, encapsulating business logic for for managing listings, including creating, updating, deleting,  and retrieving listings. This
+/// service handles persistence, event publishing,  and data transformation for listing-related operations.
+/// </summary>
+
+
 public class ListingService : IListingService
 {
     private readonly IListingRepository _repo;

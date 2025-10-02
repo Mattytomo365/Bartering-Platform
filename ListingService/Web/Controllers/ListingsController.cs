@@ -3,6 +3,15 @@ using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
+
+/// <summary>
+/// HTTP entry point for Listing operations (write + read).
+/// Initiates use cases to create/update/delete listings and to read listing data.
+/// In the CQRS-heavy branch, actions send Commands/Queries via MediatR handlers;
+/// in the service+repository branch, actions call application service methods directly.
+/// Domain invariants are enforced inside the Listing aggregate; after successful writes,
+/// integration events (listing.created/updated/deleted) are published to RabbitMQ for the Discovery read model.
+/// </summary>
 {
     [Route("api/[controller]")]
     [ApiController]
