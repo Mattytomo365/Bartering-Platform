@@ -4,9 +4,11 @@
 
 ## Overview
 
-Bartering Platform is a full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
+Bartering Platform is an inherited full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
 
 Users have the ability to create/edit/delete listings, search & discover listings for a specified location, and manage their profiles after authentication.
+
+Once the CQRS scaffold was recieved, I refactored the Listing Service to a service + repository approach to establish tradeoffs between the two patterns and get hands-on with the arhcitecure to build an understanding. Now the system is documented end-to-end and my understanding is solidified, I plan to add user-messaging capabilities, and refine exisiting microservices, exploring potential for a full-event driven design and replacing persistece requirements to relational databases.
 
 ---
 
@@ -15,13 +17,16 @@ Users have the ability to create/edit/delete listings, search & discover listing
 - **Gateway**: Ocelot
 - **Frontend**: Angular
 - **Container/dev**: Docker, Docker Compose
+- **Authentication**: Firebase JWT
 
 
 ---
 
 ## Architecture
 
-Services are loosely coupled and independently deployable, all following **Clean Architecture** implemented through several NET class libraries:
+![image](diagrams/cqrs-diagram.png)
+
+Services are loosely coupled and independently deployable, with functionality encapsulated within several NET class libraries:
 
 - **ApiGatewayService**: Central entry point for client requests, routing to appropriate backend services.
 - **ListingService**: Handles listing commands (create/update/delete), persisting to its own database alongside publishing listing integration events to RabbitMQ.
