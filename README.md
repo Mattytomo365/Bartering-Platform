@@ -4,11 +4,11 @@
 
 ## Overview
 
-Bartering Platform is an inherited full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitecural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
+Bartering Platform is an inherited full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitectural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
 
 Users have the ability to create/edit/delete listings, search & discover listings for a specified location, and manage their profiles after authentication.
 
-Once the CQRS scaffold was recieved, I refactored the Listing Service to a service + repository approach to establish tradeoffs between the two patterns and get hands-on with the arhcitecure to build an understanding. Now the system is documented end-to-end and my understanding is solidified, I plan to add user-messaging capabilities, and refine exisiting microservices, exploring potential for a full-event driven design and replacing persistece requirements to relational databases.
+Once the CQRS scaffold was recieved, I refactored the Listing Service to a service + repository approach to establish tradeoffs between the two patterns whilst getting hands-on with the arhcitecure. Now the system is documented end-to-end and my understanding is solidified, I plan to add user-messaging capabilities, and refine exisiting microservices, and explore potential for a full-event driven design with event sourcing for listings.
 
 ---
 
@@ -18,7 +18,6 @@ Once the CQRS scaffold was recieved, I refactored the Listing Service to a servi
 - **Frontend**: Angular
 - **Container/dev**: Docker, Docker Compose
 - **Authentication**: Firebase JWT
-
 
 ---
 
