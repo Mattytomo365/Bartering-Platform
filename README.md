@@ -4,11 +4,15 @@
 
 ## Overview
 
-Bartering Platform is an inherited full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitectural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ messaging.
+A full-stack **.NET 8 microservices** and **Angular** event-driven web application designed to facilitate the exchange of goods between users, featuring arhcitectural patterns/tools such as CQRS, Clean Architecture, and RabbitMQ-based messaging.
 
-Users have the ability to create/edit/delete listings, search & discover listings for a specified location, and manage their profiles after authentication.
+Authenticated users have access to listing CRUD operations, searching & discovering listings for a specified location, and profile management.
 
-Once the CQRS scaffold was recieved, I refactored the Listing Service to a service + repository approach to establish tradeoffs between the two patterns whilst getting hands-on with the arhcitecure. Now the system is documented end-to-end and my understanding is solidified, I plan to add user-messaging capabilities, and refine exisiting microservices, and explore potential for a full-event driven design with event sourcing for listings.
+The project began from an inherited CQRS scaffold. The Listing Service was refactored to a service + repository approach to establish tradeoffs between the two patterns and their architectural differences, whilst retaining clear command and query separation where appropriate.
+
+All progress is tracked through my `Bartering-Platform` GitHub project instance using a Kanban-style. Unit tests are actively being applied across backend API workflows, before moving onto feature additions such as saved items, listing statuses, and further refinement of exisiting microservices.
+
+This project is ultimately working towards a full-event driven design with event sourcing for listings with pipelines to manage dependencies, solution building, and test running.
 
 ---
 
@@ -102,12 +106,6 @@ Default endpoints:
     ```
     ng serve
     ```
-
----
-
-## License
-
-*Specify license here*
 
 ---
 ## Contributing
