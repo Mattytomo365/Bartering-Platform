@@ -11,9 +11,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Web/Web.csproj", "Web/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
 COPY ["Application/Application.csproj", "Application/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Messaging/Messaging.csproj", "Messaging/"]
 RUN dotnet restore "./Web/Web.csproj"
 COPY . .
 WORKDIR "/src/Web"

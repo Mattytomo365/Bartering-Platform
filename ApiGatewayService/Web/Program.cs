@@ -5,7 +5,7 @@ using Ocelot.Middleware;
 using Serilog;
 using Web.Auth;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); // already loads all appsetttings.json files
 
 // Tell the Host to use Serilog, reading settings from configuration:
 builder.Host.UseSerilog((ctx, lc) => lc
@@ -23,39 +23,15 @@ else
     IdentityModelEventSource.ShowPII = false;
 }
 
-// IF THESE DON'T WORK FOR DOCKER, TRY THE COMMENTED-OUT BLOCK BELOW
 // Load Ocelot configuration based on environment
-var envName = builder.Environment.EnvironmentName?.ToLowerInvariant();
-if (envName == "development")
-{
-    builder.Configuration.AddJsonFile("ocelot.development.json", optional: false, reloadOnChange: true);
-}
-else if (envName == "docker")
-{
-    builder.Configuration.AddJsonFile("ocelot.docker.json", optional: false, reloadOnChange: true);
-}
-else
-{
-    builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-}
-
-
-// MAY NEED THESE FOR DOCKER - COMMENTED OUT FOR NOW
-//// 1) Load the "standard" ASP NET Core appsettings pipeline...
-//builder.Configuration
-//    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-
-//// 2) Always overlay the Development settings (so you get the same behavior
-////    as if you ran in VS with ASPNETCORE_ENVIRONMENT=Development)
-//    .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
-
-//// 3) Then load any environment?specific file (for completeness)
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-
-//// 4) Wire up Ocelot config: always load the base, then overlay the Docker one
-//    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-//    .AddJsonFile("ocelot.docker.json", optional: true, reloadOnChange: true)
-//    .AddEnvironmentVariables();
+// Mirrors usual ASP.NET config layering and allows the overlay of docker-specific Ocelot settings on top of the base Ocelot file and environment variables
+builder.Configuration
+    .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+    .AddJsonFile(
+        $"ocelot.{builder.Environment.EnvironmentName}.json",
+        optional: true,
+        reloadOnChange: true)
+    .AddEnvironmentVariables();
 
 // Add CORS policy to allow Angular app to access the API
 builder.Services.AddCors(options =>

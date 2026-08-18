@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "listings-service",
-          "Port": 80
+          "Host": "listings-service", // matches the DNS names in Docker Compose
+          "Port": 8080 // matches ports in Docker Compose
         }
       ],
       "UpstreamPathTemplate": "/api/listings/{everything}",
@@ -17,11 +17,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/discovery/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "discovery-service",
-          "Port": 7143
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/discovery/{everything}",
@@ -30,11 +30,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/profile/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "profile-service",
-          "Port": 7199
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/api/profile/{everything}",
@@ -43,6 +43,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:8080"
+    "BaseUrl": "http://localhost:5039"
   }
 }

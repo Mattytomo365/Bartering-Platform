@@ -28,4 +28,16 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+     <Content Update="ocelot.json">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+     </Content>
+
+     <Content Update="ocelot.Docker.json">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	 </Content>
+  </ItemGroup>
+
 </Project>
