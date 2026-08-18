@@ -29,9 +29,9 @@ namespace Web.Controllers
         /// Returns 201 Created with a Location header pointing to GET /api/listings/{id}
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Create(CreateListingRequest req)
+        public async Task<IActionResult> Create(CreateListingRequest req, CancellationToken ct)
         {
-            var id = await _listingService.CreateListing(req);
+            var id = await _listingService.CreateListing(req, ct);
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
@@ -40,10 +40,9 @@ namespace Web.Controllers
         /// Returns 204 No Content on success
         /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, UpdateListingRequest req)
+        public async Task<IActionResult> Update(Guid id, UpdateListingRequest req, CancellationToken ct)
         {
-            if (id != req.Id) return BadRequest(); // guard against mismatched ids
-            await _listingService.UpdateListing(req);
+            await _listingService.UpdateListing(id, req, ct);
             return NoContent();
         }
 
@@ -65,7 +64,7 @@ namespace Web.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
         {
-            var dto = await _listingService.GetListingById(new GetListingByIdRequest { Id = id }, ct);
+            var dto = await _listingService.GetListingById(id, ct);
             return Ok(dto);
         }
 

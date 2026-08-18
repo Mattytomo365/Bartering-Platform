@@ -72,11 +72,11 @@ public class ListingService : IListingService
     /// Update an existing listing. Persists changes and publishes resulting events
     /// Returns the id updated
     /// </summary>
-    public async Task<Guid> UpdateListing(UpdateListingRequest req, CancellationToken ct = default)
+    public async Task<Guid> UpdateListing(Guid id, UpdateListingRequest req, CancellationToken ct = default)
     {
-        var listing = await _repo.GetByIdAsync(req.Id);
+        var listing = await _repo.GetByIdAsync(id);
         if (listing == null)
-            throw new Exception($"Listing with ID {req.Id} not found.");
+            throw new Exception($"Listing with ID {id} not found.");
 
         // Ensure Wants is not null by creating a new list if it is null  
         var wants = req.Wants ?? new List<string>();
@@ -126,9 +126,9 @@ public class ListingService : IListingService
     /// <summary>
     /// Query returning a detailed DTO for a single listing page
     /// </summary>
-    public async Task<ListingDetailDto> GetListingById(GetListingByIdRequest req, CancellationToken ct = default)
+    public async Task<ListingDetailDto> GetListingById(Guid id, CancellationToken ct = default)
     {
-        var listing = await _repo.GetByIdAsync(req.Id);
+        var listing = await _repo.GetByIdAsync(id);
         return _mapper.Map<ListingDetailDto>(listing);
     }
 
