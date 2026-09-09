@@ -18,41 +18,45 @@ services:
     volumes: [ "rabbitmq_data:/var/lib/rabbitmq" ]
 
   listings-service:
-    build: { context: ../ListingService, dockerfile: Dockerfile }
+    build: { context: ../ListingService, dockerfile: Web/Dockerfile }
     environment:
       ASPNETCORE_URLS: http://+:8080
-      ConnectionStrings__Sql: ${SQL_CONN_LISTINGS}
+      ASPNETCORE_ENVIRONMENT: Docker
+      ConnectionStrings__Sql: ${SQL_CONN_LISTINGS} # Compose environment variables within the container and override ASP.NET configuration keys
       RabbitMQ__ConnectionString: ${RABBIT_CONN}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
     depends_on: [ sql, rabbitmq ]
     ports: ["5093:8080"]
 
   discovery-service:
-    build: { context: ../DiscoveryService, dockerfile: Dockerfile }
+    build: { context: ../DiscoveryService, dockerfile: Web/Dockerfile }
     environment:
       ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Docker
       ConnectionStrings__Sql: ${SQL_CONN_DISCOVERY}
       RabbitMQ__ConnectionString: ${RABBIT_CONN}
     depends_on: [ sql, rabbitmq ]
     ports: ["5084:8080"]
 
   profile-service:
-    build: { context: ../ProfileService, dockerfile: Dockerfile }
+    build: { context: ../ProfileService, dockerfile: Web/Dockerfile }
     environment:
       ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Docker
       ConnectionStrings__Sql: ${SQL_CONN_PROFILES}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
     depends_on: [ sql ]
     ports: ["5114:8080"]
 
   api-gateway:
-    build: { context: ../ApiGatewayService, dockerfile: Dockerfile }
+    build: { context: ../ApiGatewayService, dockerfile: Web/Dockerfile }
     environment:
       ASPNETCORE_URLS: http://+:8080
       ASPNETCORE_ENVIRONMENT: Docker
       DownstreamServices__Listing: http://listings-service:8080
       DownstreamServices__Discovery: http://discovery-service:8080
       DownstreamServices__Profile: http://profile-service:8080
+      DownstreamApiKey: ${DOWNSTREAM_API_KEY}
     depends_on: [ listings-service, discovery-service, profile-service ]
     ports: ["5039:8080"]
 
