@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddDbContext<ListDbContext>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   options.UseSqlServer(builder.Configuration.GetConnectionString("Sql")));
 
 // Application Services
 builder.Services.AddScoped<IListingRepository, ListingRepository>();

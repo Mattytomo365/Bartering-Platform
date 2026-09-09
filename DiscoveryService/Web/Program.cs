@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Ensure DbContext is registered as scoped (already correct)
 builder.Services.AddDbContext<SearchDbContext>(options =>
    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        builder.Configuration.GetConnectionString("Sql"),
         sqlOpts => sqlOpts.UseNetTopologySuite()
     )
 );

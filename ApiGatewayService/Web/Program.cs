@@ -5,7 +5,7 @@ using Ocelot.Middleware;
 using Serilog;
 using Web.Auth;
 
-var builder = WebApplication.CreateBuilder(args); // already loads all appsetttings.json files
+var builder = WebApplication.CreateBuilder(args); // loads all appsettings.json files
 
 // Tell the Host to use Serilog, reading settings from configuration:
 builder.Host.UseSerilog((ctx, lc) => lc

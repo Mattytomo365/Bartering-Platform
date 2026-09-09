@@ -13,7 +13,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // Database  
 builder.Services.AddDbContext<ProfileDbContext>(opts =>
-   opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   opts.UseSqlServer(builder.Configuration.GetConnectionString("Sql")));
 
 // MediatR  
 builder.Services.AddMediatR(cfg =>
