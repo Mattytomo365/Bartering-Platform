@@ -7,6 +7,16 @@ services:
       MSSQL_PID: Developer
     ports: ["1433:1433"]
     volumes: [ "mssql_data:/var/opt/mssql" ]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" -b || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -16,6 +26,12 @@ services:
       RABBITMQ_DEFAULT_VHOST: ${RABBIT_VHOST}
     ports: ["5672:5672", "15672:15672"]
     volumes: [ "rabbitmq_data:/var/lib/rabbitmq" ]
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
 
   listings-service:
     build: { context: ../ListingService, dockerfile: Web/Dockerfile }
@@ -25,7 +41,11 @@ services:
       ConnectionStrings__Sql: ${SQL_CONN_LISTINGS} # Compose environment variables within the container and override ASP.NET configuration keys
       RabbitMQ__ConnectionString: ${RABBIT_CONN}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
-    depends_on: [ sql, rabbitmq ]
+    depends_on:
+      sql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports: ["5093:8080"]
 
   discovery-service:
@@ -35,7 +55,11 @@ services:
       ASPNETCORE_ENVIRONMENT: Docker
       ConnectionStrings__Sql: ${SQL_CONN_DISCOVERY}
       RabbitMQ__ConnectionString: ${RABBIT_CONN}
-    depends_on: [ sql, rabbitmq ]
+    depends_on:
+      sql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
     ports: ["5084:8080"]
 
   profile-service:
@@ -45,7 +69,9 @@ services:
       ASPNETCORE_ENVIRONMENT: Docker
       ConnectionStrings__Sql: ${SQL_CONN_PROFILES}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
-    depends_on: [ sql ]
+    depends_on:
+      sql:
+        condition: service_healthy
     ports: ["5114:8080"]
 
   api-gateway:
